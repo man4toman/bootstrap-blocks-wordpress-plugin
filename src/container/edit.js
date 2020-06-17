@@ -42,6 +42,10 @@ const fluidBreakpointOptions = [
 		value: '',
 	},
 	{
+		label: __( 'Xxl', 'wp-bootstrap-blocks' ),
+		value: 'xxl',
+	},
+	{
 		label: __( 'Xl', 'wp-bootstrap-blocks' ),
 		value: 'xl',
 	},
