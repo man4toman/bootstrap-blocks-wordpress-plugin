@@ -4,11 +4,19 @@ import {
 	alignTop,
 	templateIconMissing,
 } from './icons';
+import { getBootstrapVersion } from '../helper';
 
 const { __ } = wp.i18n;
 const { InnerBlocks, InspectorControls, BlockControls, AlignmentToolbar } =
 	wp.blockEditor || wp.editor; // Fallback to 'wp.editor' for backwards compatibility
-const { IconButton, CheckboxControl, PanelBody, SVG, Path } = wp.components;
+const {
+	IconButton,
+	CheckboxControl,
+	PanelBody,
+	SVG,
+	Path,
+	SelectControl,
+} = wp.components;
 const { Component, Fragment } = wp.element;
 const { withSelect, withDispatch } = wp.data;
 const { applyFilters } = wp.hooks;
@@ -179,6 +187,60 @@ if ( enableCustomTemplate ) {
 	} );
 }
 
+let horizontalGuttersOptions = [
+	{
+		label: __( 'None', 'wp-bootstrap-blocks' ),
+		value: 'gx-0',
+	},
+	{
+		label: __( 'Small', 'wp-bootstrap-blocks' ),
+		value: 'gx-3',
+	},
+	{
+		label: __( 'Large', 'wp-bootstrap-blocks' ),
+		value: 'gx-5',
+	},
+];
+horizontalGuttersOptions = applyFilters(
+	'wpBootstrapBlocks.row.horizontalGutterOptions',
+	horizontalGuttersOptions
+);
+
+horizontalGuttersOptions = [
+	{
+		label: __( 'Bootstrap Default', 'wp-bootstrap-blocks' ),
+		value: '',
+	},
+	...horizontalGuttersOptions,
+];
+
+let verticalGuttersOptions = [
+	{
+		label: __( 'None', 'wp-bootstrap-blocks' ),
+		value: 'gy-0',
+	},
+	{
+		label: __( 'Small', 'wp-bootstrap-blocks' ),
+		value: 'gy-3',
+	},
+	{
+		label: __( 'Large', 'wp-bootstrap-blocks' ),
+		value: 'gy-5',
+	},
+];
+verticalGuttersOptions = applyFilters(
+	'wpBootstrapBlocks.row.verticalGuttersOptions',
+	verticalGuttersOptions
+);
+
+verticalGuttersOptions = [
+	{
+		label: __( 'Bootstrap Default', 'wp-bootstrap-blocks' ),
+		value: '',
+	},
+	...verticalGuttersOptions,
+];
+
 const getColumnsTemplate = ( templateName ) => {
 	const template = templates.find( ( t ) => t.name === templateName );
 	return template ? template.template : [];
@@ -203,6 +265,8 @@ class BootstrapRowEdit extends Component {
 			alignment,
 			verticalAlignment,
 			editorStackColumns,
+			horizontalGutters,
+			verticalGutters,
 		} = attributes;
 
 		const onTemplateChange = ( newSelectedTemplateName ) => {
@@ -324,6 +388,36 @@ class BootstrapRowEdit extends Component {
 								setAttributes( { noGutters: isChecked } )
 							}
 						/>
+						{ getBootstrapVersion() >= 5 && ! noGutters && (
+							<Fragment>
+								<SelectControl
+									label={ __(
+										'Horizontal Gutters',
+										'wp-bootstrap-blocks'
+									) }
+									value={ horizontalGutters }
+									options={ horizontalGuttersOptions }
+									onChange={ ( value ) => {
+										setAttributes( {
+											horizontalGutters: value,
+										} );
+									} }
+								/>
+								<SelectControl
+									label={ __(
+										'Vertical Gutters',
+										'wp-bootstrap-blocks'
+									) }
+									value={ verticalGutters }
+									options={ verticalGuttersOptions }
+									onChange={ ( value ) => {
+										setAttributes( {
+											verticalGutters: value,
+										} );
+									} }
+								/>
+							</Fragment>
+						) }
 					</PanelBody>
 				</InspectorControls>
 				<BlockControls>
