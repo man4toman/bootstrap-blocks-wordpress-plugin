@@ -1,3 +1,4 @@
+/* global wpBootstrapBlocks */
 /**
  * WordPress dependencies
  */
@@ -222,7 +223,9 @@ class BootstrapColumnEdit extends Component {
 									) }
 									checked={ equalWidthXxl }
 									onChange={ ( isChecked ) =>
-										setAttributes( { equalWidthXxl: isChecked } )
+										setAttributes( {
+											equalWidthXxl: isChecked,
+										} )
 									}
 								/>
 							</Fragment>
