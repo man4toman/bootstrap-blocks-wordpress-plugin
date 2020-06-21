@@ -1,4 +1,5 @@
-/* global wpBootstrapBlocks */
+import { getBootstrapVersion } from '../helper';
+
 /**
  * WordPress dependencies
  */
@@ -203,7 +204,7 @@ class BootstrapColumnEdit extends Component {
 								setAttributes( { equalWidthXl: isChecked } )
 							}
 						/>
-						{ wpBootstrapBlocks.bootstrapVersion >= 5 && (
+						{ getBootstrapVersion() >= 5 && (
 							<Fragment>
 								<hr />
 								<ColumnSizeRangeControl

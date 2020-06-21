@@ -1,3 +1,5 @@
+import { getBootstrapVersion } from '../helper';
+
 /**
  * WordPress dependencies
  */
@@ -36,15 +38,7 @@ marginAfterOptions = [
 	...marginAfterOptions,
 ];
 
-const fluidBreakpointOptions = [
-	{
-		label: __( 'No breakpoint selected', 'wp-bootstrap-blocks' ),
-		value: '',
-	},
-	{
-		label: __( 'Xxl', 'wp-bootstrap-blocks' ),
-		value: 'xxl',
-	},
+let fluidBreakpointOptions = [
 	{
 		label: __( 'Xl', 'wp-bootstrap-blocks' ),
 		value: 'xl',
@@ -61,6 +55,24 @@ const fluidBreakpointOptions = [
 		label: __( 'Sm', 'wp-bootstrap-blocks' ),
 		value: 'sm',
 	},
+];
+
+if ( getBootstrapVersion() >= 5 ) {
+	fluidBreakpointOptions = [
+		{
+			label: __( 'Xxl', 'wp-bootstrap-blocks' ),
+			value: 'xxl',
+		},
+		...fluidBreakpointOptions,
+	];
+}
+
+fluidBreakpointOptions = [
+	{
+		label: __( 'No breakpoint selected', 'wp-bootstrap-blocks' ),
+		value: '',
+	},
+	...fluidBreakpointOptions,
 ];
 
 class BootstrapContainerEdit extends Component {
